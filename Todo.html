@@ -2,30 +2,37 @@
   <head>
     <link rel="Stylesheet" href="Todo.css" />
     <script>
+      var listName=[];
       function addButton() {
-        var listName=[];
-        listName.push(document.getElementById("textInput").value);
-        console.log(listName);
-          for( var i=0;i< listName.length;i++)
-          {
-              var list=listName[i];
-              alert(list + " added Succesfully")
-          
-            document.getElementById("result").innerHTML +=
-              "<div id='index'><input type='checkbox'/>" +
-              list +
-              "<Button onClick='deleteElement()' class='styleButton1' > Delete</Button>" +
-              "<Button onClick='editElement()' class='styleButton2'> Edit</Button>" +
-              "</div><br>";
-          }
-          
-          function deleteElement(index)
-          {
-          // var deleteElement=document.getElementById(index);
-          // deleteElement.parentNode.removeChild(deleteElement);
-          listName.removeChild(listName.childNodes[index]);  
-          }
+        var currentValue=document.getElementById("textInput").value;
+        listName.push(currentValue);
+        alert(currentValue + " added Succesfully");
+        document.getElementById("textInput").value="";
+        displayElement();       
+      }
+
+      function deleteElement(i){
+        var filterList=listName.filter(function(value,index)
+                                      {
+                                      return index!=i
+                                      })
+        listName=filterList;
+        displayElement();
+      }
+
+      function displayElement(){
+        document.getElementById("result").innerHTML="<h2>List:</h2>";
+        for( var i=0;i< listName.length;i++){
+          var list=listName[i];
+          document.getElementById("result").innerHTML +=
+          "<div><input type='checkbox'/>" +
+          list +
+          "<Button onClick='deleteElement("+i+")' class='styleButton1' > Delete</Button>" +
+          "<Button onClick='editElement("+i+")' class='styleButton2'> Edit</Button>" +
+          "</div><br>";
         }
+      }
+        
     </script>
     <title>To Do List</title>
   </head>
